@@ -17,7 +17,7 @@ options(scipen = 999)
 ```
 
 
-# The real winners of the US-China trade dispute
+ %>%  The real winners of the US-China trade dispute
 
 China and the US have been locked in a trade dispute for more than two years. With prices for Chinese products rising, where do US consumers and manufacturers import from instead? This DW analysis shows how global trade flows have shifted, and how it’s changing the lives of those affected
 
@@ -99,7 +99,7 @@ top50 = gdp %>% arrange(-gdp18) %>% filter(iso.code != "USA") %>%
 
 full_join(top10c, top50) %>% select(1,3,4,2) %>%
   filter(!is.na(country)) %>% mutate(gdp18 = gdp18/10^9) %>% 
-  arrange(continent, country) #%>% knitr::kable(digits = 2)
+  arrange(continent, country) %>% knitr::kable(digits = 2)
 rm(top10c, top50)
 ```
 
@@ -419,7 +419,7 @@ d_usa %>% filter(quarter == "2019-Q4", p.code != "TOTAL", country == "China") %>
   mutate(tariff = ifelse(p.code %in% t$HTS_id, "Tariffed","Untariffed")) %>%
   select(-country,-quarter) %>% group_by(tariff) %>% summarise(n = n(), value = sum(value)) %>% 
   mutate(`Number of categories` = n/sum(n), `Import value` = value/sum(value)) %>% 
-  select(-n, -value) #%>% knitr::kable(digits = 2)
+  select(-n, -value) %>% knitr::kable(digits = 2)
 ```
 95% of products and 93% of US import value are subject to tariffs.
 
@@ -431,7 +431,7 @@ x = d_usa %>% filter(country == "China", quarter %in% c("2019-Q4","2020-Q2")) %>
   spread(quarter,value) %>% filter(`2019-Q4`>10^5,`2020-Q2`>10^5) %>% 
   mutate(change = `2020-Q2`/`2019-Q4`) %>% arrange(-change) %>% select(-country)
 
-head(x, 10) %>% left_join(p) %>% select(1,7,2:4) #%>% knitr::kable()
+head(x, 10) %>% left_join(p) %>% select(1,7,2:4) %>% knitr::kable()
 ```
 
 Many medical products have skyrocketed. The category of textiles that includes face masks has increased almost ten-fold between Q4 2019 and Q2 2020.
@@ -443,7 +443,7 @@ x = d_usa %>% filter(quarter %in% c("2019-Q4","2020-Q2")) %>%
   spread(quarter,value) %>% filter(`2019-Q4`>10^5,`2020-Q2`>10^5) %>% 
   mutate(change = `2020-Q2`/`2019-Q4`) %>% arrange(-change)
 
-head(x, 10) %>% left_join(p) %>% select(1,7,2:4) #%>% knitr::kable()
+head(x, 10) %>% left_join(p) %>% select(1,7,2:4) %>% knitr::kable()
 ```
 
 Some medical products, others seem to be seasonal.
@@ -493,7 +493,7 @@ Which products have seen the largest drop in China's market share within US impo
 x = d_redirections %>% filter(country == "China") %>% group_by(tariff) %>%
   summarise(change = mean(change, na.rm = T))
 drop.notariff = x$change[2]
-x #%>% knitr::kable(digits = 3)
+x %>% knitr::kable(digits = 3)
 ```
 
 Imports of tariffed products fell by 3.4 percentage points on average, while non-tariffed items fell by only 0.7 percentage points.
@@ -522,7 +522,7 @@ tmp = d_usa %>% filter(quarter == "2019-Q4", p.code != "TOTAL", country == "Chin
 d_redirections_all %>% filter(country == "China") %>% 
   left_join(tmp, by = "p.code.clean") %>% filter(tariff == "Tariffed", !is.na(subs)) %>%
   group_by(subs) %>% summarise(n = n(), value_19Q4 = sum(value_19Q4)/10^6) %>% 
-  mutate(`Number of categories` = n/sum(n), `Import value` = value_19Q4/sum(value_19Q4)) #%>% knitr::kable(digits = 2)
+  mutate(`Number of categories` = n/sum(n), `Import value` = value_19Q4/sum(value_19Q4)) %>% knitr::kable(digits = 2)
 ```
 
 Indication of import substitution can be found in 654 tariffed product categories (57% of all product categories), making up 84% of tariffed US import value in Q4 2019 (USD 89 bn).
@@ -563,7 +563,7 @@ Filter for products imported by China with the highest loss in imports.
 
 ```{r}
 d_redirections %>% filter(country == "China") %>% arrange(change.imports.bn) %>% 
-  select(-country) %>% head(10) #%>% knitr::kable(digits = 2)
+  select(-country) %>% head(10) %>% knitr::kable(digits = 2)
 ```
 
 
@@ -574,7 +574,7 @@ Exports of computers, furniture and cell phones from China to the US have been m
 Filter for products with the most additional imports:
 
 ```{r}
-d_redirections %>% filter(country != "China") %>% arrange(-change.imports.bn) %>% head(10) #%>% knitr::kable(digits = 2)
+d_redirections %>% filter(country != "China") %>% arrange(-change.imports.bn) %>% head(10) %>% knitr::kable(digits = 2)
 ```
 
 Cell phones from Vietnam, computers from Mexico and Taiwan have gained the most.
@@ -585,7 +585,7 @@ Cell phones from Vietnam, computers from Mexico and Taiwan have gained the most.
 ```{r}
 d_redirections %>% filter(country != "China") %>% group_by(p.code.clean, short.name) %>%
   summarise(change.imports.bn = sum(change.imports.bn)) %>% arrange(-change.imports.bn) %>%
-  head(20) #%>% knitr::kable(digits = 2)
+  head(20) %>% knitr::kable(digits = 2)
 ```
 
 Computers/computer parts (USD 5bn), furniture (USD 1.7bn) and cell phones  (USD 1.5bn) have gained the most overall.
@@ -602,7 +602,7 @@ d_redirections %>% filter(country == "Mexico") %>% arrange(-change.imports.bn) %
 x = d_redirections %>% group_by(country) %>%
   summarise(change.imports.bn = sum(change.imports.bn)) %>% arrange(-change.imports.bn) %>%
   head(10) 
-x #%>% knitr::kable(digits = 2)
+x %>% knitr::kable(digits = 2)
 ```
 
 Vietnam, Mexico and Taiwan have gained the most overall.
@@ -638,7 +638,7 @@ d_redirections %>% group_by(country) %>%
   summarise(change.imports.bn = sum(change.imports.bn)) %>%
   arrange(-change.imports.bn) %>% left_join(gdp[2:3]) %>%
   mutate(gdp18 = gdp18/10^9, perc.gdp = change.imports.bn/gdp18*100) %>% arrange(-perc.gdp) %>% 
-  select(1,4,3,2) %>% head(10) #%>% knitr::kable(digits = 2)
+  select(1,4,3,2) %>% head(10) %>% knitr::kable(digits = 2)
 ```
 
 Relative to GDP, Vietnam has benefited the most. The added USD 6.4bn equal 2.6% of the countrie's 2018 GDP.
