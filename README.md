@@ -1,4 +1,4 @@
-%\>% The real winners of the US-China trade dispute
+# The real winners of the US-China trade dispute
 
 China and the US have been locked in a trade dispute for more than two
 years. With prices for Chinese products rising, where do US consumers
