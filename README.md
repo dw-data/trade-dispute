@@ -26,8 +26,8 @@ the story that came out of this analysis.*
 **Read the full article on DW.com:** [English](https://www.dw.com/a-xxx)
 | [German](https://www.dw.com/a-xxx)
 
-**Story by:** [Kira Schacht](https://twitter.com/daten_drang), Christine
-Laskowski
+**Story by:** [Kira Schacht](https://twitter.com/daten_drang),
+[Christine Laskowski](https://twitter.com/laskowski_c)
 
 # Data sources
 
@@ -184,8 +184,8 @@ more during the pandemic.
 ![](trade-dispute_files/figure-gfm/unnamed-chunk-6-1.png)<!-- -->
 
 **in percent (market share)**
-![](trade-dispute_files/figure-gfm/unnamed-chunk-7-1.png)<!-- -->
-![](graphics/final/png/xxx)
+
+![](graphics/final/png/185_en_trade-dispute_china_imports.png)
 
 #### Decrease between 2017 and 2019
 
@@ -202,7 +202,7 @@ a loss of around USD bn per year.
 
 ![](trade-dispute_files/figure-gfm/unnamed-chunk-13-1.png)<!-- -->
 
-![](trade-dispute_files/figure-gfm/unnamed-chunk-14-1.png)<!-- -->
+![](graphics/final/png/184_en_trade-dispute_china_products.png)
 
 ### 1.4 What share of Chinese products is tariffed?
 
@@ -413,7 +413,7 @@ phones (USD 1.5bn) have gained the most overall.
 
 Vietnam, Mexico and Taiwan have gained the most overall.
 
-![](trade-dispute_files/figure-gfm/unnamed-chunk-28-1.png)<!-- -->
+![](graphics/final/png/186_en_trade-dispute_winners_gains.png)
 
 #### scale by GDP
 
@@ -436,24 +436,24 @@ GDP.
 
 ## 4\. Market share changes by country
 
-### South-East Asia: Beneficiary countries who have kept their gains during the pandemic
+### Southeast Asia: Beneficiary countries who have kept their gains during the pandemic
 
-![](trade-dispute_files/figure-gfm/unnamed-chunk-30-1.png)<!-- -->
+![](graphics/final/png/189_en_trade-dispute_marketshare_winners.png)
 
 ### Others: Beneficiary countries who have not kept their gains
 
-![](trade-dispute_files/figure-gfm/unnamed-chunk-31-1.png)<!-- -->
+![](graphics/final/png/188_en_trade-dispute_marketshare_mexico.png)
 
 ## 5\. Market share changes by product
 
 ### computers market share
 
-![](trade-dispute_files/figure-gfm/unnamed-chunk-32-1.png)<!-- -->
+![](graphics/final/png/187_en_trade-dispute_marketshare_computers.png)
 
 ### bubble chart: import value changes by country and product
 
 ![](trade-dispute_files/figure-gfm/unnamed-chunk-33-1.png)<!-- -->![](trade-dispute_files/figure-gfm/unnamed-chunk-33-2.png)<!-- -->
 
-![](trade-dispute_files/figure-gfm/unnamed-chunk-34-1.png)<!-- -->
+![](graphics/final/png/190_en_trade-dispute_product_bubbles.png)
 
-![](trade-dispute_files/figure-gfm/unnamed-chunk-35-1.png)<!-- -->
+![](graphics/final/png/194_en_trade-dispute_product_bubbles_mexico.png)

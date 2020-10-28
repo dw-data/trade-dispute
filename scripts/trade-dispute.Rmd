@@ -7,7 +7,7 @@ output:
 ---
 
 ```{r setup, include = FALSE}
-knitr::opts_knit$set(root.dir = "/Users/schachtk/Documents/DW/xxx_trade-dispute/")
+knitr::opts_knit$set(root.dir = "/Users/schachtk/Documents/DW/184_194_trade-dispute/")
 knitr::opts_chunk$set(
 	echo = FALSE,
 	message = FALSE,
@@ -29,7 +29,7 @@ This analysis broadly follows the methodology of the study on US-China trade div
 
 **Read the full article on DW.com:** [English](https://www.dw.com/a-xxx) | [German](https://www.dw.com/a-xxx)
 
-**Story by:** [Kira Schacht](https://twitter.com/daten_drang), Christine Laskowski
+**Story by:** [Kira Schacht](https://twitter.com/daten_drang), [Christine Laskowski](https://twitter.com/laskowski_c)
 
 
 # Data sources
@@ -283,7 +283,7 @@ ggplot(x, aes(quarter, value.country/10^6, color = country, group = country)) +
 ```
 
 **in percent (market share)**
-```{r}
+```{r fig.show='hide'}
 plot = ggplot(x, aes(quarter, share, group = country, color = country)) + 
   geom_line(size = 8, lineend = "round") +
   geom_vline(xintercept = c(13,19), colour =  "#002d5a", size = 4) +
@@ -302,14 +302,13 @@ ggsave("graphics/video/png/trade_dispute_1_line.png", plot, device = "png", widt
 
 plot = plot + theme_dw() +
   scale_x_discrete(labels = ifelse(grepl("Q1",unique(x$quarter)), substr(unique(x$quarter), 1, 4), "")) 
-finalise_dwplot(plot,"Source: ITC Trade Map | Methodology: github.com/dw-data/trade-dispute", "graphics/preliminary/184_trade-dispute_china_imports.svg", "svg",
+finalise_dwplot(plot,"Source: ITC Trade Map | Methodology: github.com/dw-data/trade-dispute", "graphics/preliminary/185_trade-dispute_china_imports.svg", "svg",
                 width_pixels=1920, height_pixels= 2160)
-finalise_dwplot(plot,"Source: ITC Trade Map | Methodology: github.com/dw-data/trade-dispute", "graphics/preliminary/184_trade-dispute_china_imports.png", "png",
+finalise_dwplot(plot,"Source: ITC Trade Map | Methodology: github.com/dw-data/trade-dispute", "graphics/preliminary/185_trade-dispute_china_imports.png", "png",
                 width_pixels=1920, height_pixels= 2160)
 ```
-![](graphics/final/png/xxx)
 
-
+![](graphics/final/png/185_en_trade-dispute_china_imports.png)
 
 #### Decrease between 2017 and 2019
 ```{r}
@@ -393,7 +392,7 @@ ggsave("graphics/video/svg/trade_dispute_3_bars.svg", device = "svg", width= 192
 ggsave("graphics/video/png/trade_dispute_3_bars.png", device = "png", width= 1920/72, height= 2700/72, dpi = 72, units="in", scale = 0.25)
 ```
 
-```{r}
+```{r fig.show='hide'}
 #handlebar chart
 plot = ggplot(x %>% filter(short.name != "monitors"),
        aes(x = value/10^6, y = short.name, label = round(value/10^6,1))) +
@@ -401,15 +400,16 @@ plot = ggplot(x %>% filter(short.name != "monitors"),
   geom_point(aes(colour = quarter), size = 20) +
   geom_text(hjust = .5, vjust = 1, nudge_y = -.3, size = 25) +
   scale_colour_manual(values = dw_info[1:2] %>% unname) +
-  labs(x = "billion USD",y="",title = "Trade dispute affected all\nof US's biggest Chinese imports",
-       caption = "Change in most common US imports from China") +
+  labs(x = "billion USD",y="",title = "Trade dispute affected all\nof US' biggest Chinese imports",
+       caption = "Change in most common US imports from China, in USD bn") +
   theme_dw() 
-finalise_dwplot(plot,"Source: ITC Trade Map | Methodology: github.com/dw-data/trade-dispute", "graphics/preliminary/185_trade-dispute_china_products.svg", "svg",
+finalise_dwplot(plot,"Source: ITC Trade Map | Methodology: github.com/dw-data/trade-dispute", "graphics/preliminary/184_trade-dispute_china_products.svg", "svg",
                 width_pixels=1920, height_pixels= 2700)
-finalise_dwplot(plot,"Source: ITC Trade Map | Methodology: github.com/dw-data/trade-dispute", "graphics/preliminary/185_trade-dispute_china_products.png", "png",
+finalise_dwplot(plot,"Source: ITC Trade Map | Methodology: github.com/dw-data/trade-dispute", "graphics/preliminary/184_trade-dispute_china_products.png", "png",
                 width_pixels=1920, height_pixels= 2700)
 ```
 
+![](graphics/final/png/184_en_trade-dispute_china_products.png)
 
 ### 1.4 What share of Chinese products is tariffed?
 
@@ -607,11 +607,14 @@ x %>% knitr::kable(digits = 2)
 
 Vietnam, Mexico and Taiwan have gained the most overall.
 
-```{r}
-plot = ggplot(x %>% mutate(country = factor(country, levels = country %>% rev,
-                                            labels = c(x$country[10:8], "Russia", "South Korea",
-                                                       x$country[5:4],"Taiwan","Mexico","Vietnam"))),
-       aes(change.imports.bn, country)) +
+```{r fig.show='hide'}
+x = x %>%
+  mutate(country = gsub("n Federation","",country) %>%
+           gsub("Korea, Republic of","South Korea",.) %>% 
+           gsub("Viet Nam","Vietnam",.) %>% 
+           gsub("Taipei, Chinese","Taiwan",.),
+         country = factor(country, levels = country %>% rev))
+plot = ggplot(x, aes(change.imports.bn, country)) +
   geom_bar(stat = "identity", fill = dw_info[1], width = .7) +
   scale_x_continuous(expand = expansion(mult = c(0,0))) +
   scale_y_discrete(expand = expansion(mult = c(0,0))) +
@@ -624,12 +627,13 @@ plot = ggplot(x %>% mutate(country = factor(country, levels = country %>% rev,
        caption = "quarterly exports to the US gained between Q4 2017 and Q4 2019",
        x = "USD bn")
 
-finalise_dwplot(plot,"Source: ITC Trade Map | Methodology: github.com/dw-data/trade-dispute", "graphics/preliminary/xxx_trade-dispute_winners_gains.svg", "svg",
+finalise_dwplot(plot,"Source: ITC Trade Map | Methodology: github.com/dw-data/trade-dispute", "graphics/preliminary/186_trade-dispute_winners_gains.svg", "svg",
                 width_pixels=1920, height_pixels= 2700)
-finalise_dwplot(plot,"Source: ITC Trade Map | Methodology: github.com/dw-data/trade-dispute", "graphics/preliminary/xxx_trade-dispute_winners_gains.png", "png",
+finalise_dwplot(plot,"Source: ITC Trade Map | Methodology: github.com/dw-data/trade-dispute", "graphics/preliminary/186_trade-dispute_winners_gains.png", "png",
                 width_pixels=1920, height_pixels= 2700)
 ```
 
+![](graphics/final/png/186_en_trade-dispute_winners_gains.png)
 
 #### scale by GDP
 
@@ -645,9 +649,9 @@ Relative to GDP, Vietnam has benefited the most. The added USD 6.4bn equal 2.6% 
 
 ## 4. Market share changes by country
 
-### South-East Asia: Beneficiary countries who have kept their gains during the pandemic
+### Southeast Asia: Beneficiary countries who have kept their gains during the pandemic
 
-```{r}
+```{r fig.show='hide'}
 x = d_usa %>%
   filter(p.code == "TOTAL", country %in% c("Viet Nam","Malaysia","Korea, Republic of","Taipei, Chinese")) %>% 
   left_join(d_usa_total, by = c("p.code","quarter"), suffix = c(".country",".total")) %>% 
@@ -664,7 +668,7 @@ plot = ggplot(x, aes(quarter, share, group = country, colour = country)) +
   scale_y_continuous(labels = scales::percent_format(accuracy = 1),
                      limits = c(0,max(x$share)), expand = expansion(mult = c(0,.05))) +
   theme_minimal() + theme(panel.grid.minor = element_blank()) +
-  labs(title = "South-East Asian countries have held on\nto gains during the pandemic",
+  labs(title = "Southeast Asian countries have held on\nto gains during the pandemic",
        caption = "Import market shares of current trade dispute beneficiaries")
 ggsave("graphics/video/svg/trade_dispute_5_marketshareWinners.svg", plot, device = "svg", width= 1920/72, height= 1080/72, dpi = 72, units="in", scale = 0.25)
 ggsave("graphics/video/png/trade_dispute_5_marketshareWinners.png", plot, device = "png", width= 1920/72, height= 1080/72, dpi = 72, units="in", scale = 0.25)
@@ -672,14 +676,16 @@ ggsave("graphics/video/png/trade_dispute_5_marketshareWinners.png", plot, device
 plot = plot + theme_dw() +
   theme(legend.position = "right") +
   scale_x_discrete(labels = ifelse(grepl("Q1",unique(x$quarter)), substr(unique(x$quarter), 1, 4), ""))
-finalise_dwplot(plot,"Source: ITC Trade Map | Methodology: github.com/dw-data/trade-dispute", "graphics/preliminary/xxx_trade-dispute_marketshare_winners.svg", "svg",
+finalise_dwplot(plot,"Source: ITC Trade Map | Methodology: github.com/dw-data/trade-dispute", "graphics/preliminary/189_trade-dispute_marketshare_winners.svg", "svg",
                 width_pixels=1920, height_pixels= 2160)
-finalise_dwplot(plot,"Source: ITC Trade Map | Methodology: github.com/dw-data/trade-dispute", "graphics/preliminary/xxx_trade-dispute_marketshare_winners.png", "png",
+finalise_dwplot(plot,"Source: ITC Trade Map | Methodology: github.com/dw-data/trade-dispute", "graphics/preliminary/189_trade-dispute_marketshare_winners.png", "png",
                 width_pixels=1920, height_pixels= 2160)
 ```
 
+![](graphics/final/png/189_en_trade-dispute_marketshare_winners.png)
+
 ### Others: Beneficiary countries who have not kept their gains
-```{r}
+```{r fig.show='hide'}
 x = d_usa %>% filter(p.code == "TOTAL", country %in% c("Mexico", "Canada")) %>% 
   left_join(d_usa_total, by = c("p.code","quarter"), suffix = c(".country",".total")) %>% 
   mutate(share = value.country / value.total)
@@ -712,24 +718,27 @@ plot = ggplot(x %>% filter(country == "Mexico"), aes(quarter, share, group = 0))
     labs(title = "Mexico's exports to the US\nhave dropped during the pandemic",
        caption = "Market share of Mexico in all US imports") +
     theme_dw()
-finalise_dwplot(plot,"Source: ITC Trade Map | Methodology: github.com/dw-data/trade-dispute", "graphics/preliminary/xxx_trade-dispute_marketshare_mexico.svg", "svg",
+finalise_dwplot(plot,"Source: ITC Trade Map | Methodology: github.com/dw-data/trade-dispute", "graphics/preliminary/188_trade-dispute_marketshare_mexico.svg", "svg",
                 width_pixels=1920, height_pixels= 2160)
-finalise_dwplot(plot,"Source: ITC Trade Map | Methodology: github.com/dw-data/trade-dispute", "graphics/preliminary/xxx_trade-dispute_marketshare_mexico.png", "png",
+finalise_dwplot(plot,"Source: ITC Trade Map | Methodology: github.com/dw-data/trade-dispute", "graphics/preliminary/188_trade-dispute_marketshare_mexico.png", "png",
                 width_pixels=1920, height_pixels= 2160)
 ```
 
+![](graphics/final/png/188_en_trade-dispute_marketshare_mexico.png)
 
 ## 5. Market share changes by product
 
 ### computers market share
 
-```{r}
-x = d_usa %>% filter(p.code %in% c(8471,8473), country %in% c("China","Mexico","Viet Nam")) %>% 
+```{r fig.show='hide'}
+x = d_usa %>% filter(p.code %in% c(8471,8473), country %in% c("China","Mexico","Taipei, Chinese")) %>% 
   left_join(d_usa_total, by = c("p.code","quarter"), suffix = c(".country",".total")) %>% 
   left_join(p[-2]) %>% group_by(country, quarter, p.code.clean, short.name) %>%
   summarise(value.country = sum(value.country), value.total = sum(value.total)) %>% 
   mutate(share = value.country / value.total) %>% select(-value.country, -value.total) %>% 
-  ungroup()
+  ungroup() %>% 
+  mutate(country = ifelse(country == "Taipei, Chinese", "Taiwan", country) %>% 
+           ifelse(country == "Viet Nam", "Vietnam", .))
 
 plot = ggplot(x, aes(quarter, share, fill = country, group = country)) +
   geom_area() +
@@ -741,14 +750,16 @@ plot = ggplot(x, aes(quarter, share, fill = country, group = country)) +
   scale_y_continuous(labels = scales::percent, limits = c(0,1.1), expand = expansion(mult = c(0,0))) +
   scale_x_discrete(labels = ifelse(grepl("Q1",unique(x$quarter)), substr(unique(x$quarter), 1, 4), ""),
                    expand = expansion(mult = c(0,0))) +
-  labs(title = "The US now imports computers from\nTaipei and Mexico instead of China",
-       caption = "Market share of Mexico in all US imports") +
+  labs(title = "Taiwan and Mexico challenge\nChina's computer dominance",
+       caption = "Market share in all US imports of computers") +
   theme_dw() + theme(panel.grid = element_blank())
-finalise_dwplot(plot,"Source: ITC Trade Map | Methodology: github.com/dw-data/trade-dispute", "graphics/preliminary/xxx_trade-dispute_marketshare_computers.svg", "svg",
+finalise_dwplot(plot,"Source: ITC Trade Map | Methodology: github.com/dw-data/trade-dispute", "graphics/preliminary/187_trade-dispute_marketshare_computers.svg", "svg",
                 width_pixels=1920, height_pixels= 2160)
-finalise_dwplot(plot,"Source: ITC Trade Map | Methodology: github.com/dw-data/trade-dispute", "graphics/preliminary/xxx_trade-dispute_marketshare_computers.png", "png",
+finalise_dwplot(plot,"Source: ITC Trade Map | Methodology: github.com/dw-data/trade-dispute", "graphics/preliminary/187_trade-dispute_marketshare_computers.png", "png",
                 width_pixels=1920, height_pixels= 2160)
 ```
+
+![](graphics/final/png/187_en_trade-dispute_marketshare_computers.png)
 
 ### bubble chart: import value changes by country and product
 
@@ -775,7 +786,7 @@ plot = ggplot(x, aes(y = change, x = country, size = `2019-Q4`, fill = col)) +
   scale_x_discrete(expand = expansion(mult = c(.8, .5))) +
   scale_size_continuous(range = c(1,20)) +
   scale_fill_manual(values =c(dw_info[1:5],dw_grey[7]) %>% unname) +
-  labs(title = "Electronics exports from Vietnam and Taiwan boom as China's decrease",
+  labs(title = "Electronics exports from Vietnam and Taiwan boom",
        subtitle = "change in US imports 2017 - 2019. size by volume in USD",
        x = "", y = "change in US imports from Q4 2017 to Q4 2019") +
   coord_flip() + guides(size = F) + theme_minimal() +
@@ -790,7 +801,7 @@ ggsave("graphics/video/svg/trade_dispute_6_2_bubbles_zoomout.svg", device = "svg
 ggsave("graphics/video/png/trade_dispute_6_2_bubbles_zoomout.png", device = "png", width= 1920/72, height= 1620/72, dpi = 72, units="in", scale = 0.25)
 ```
 
-```{r fig.width=3,fig.height=3}
+```{r fig.show='hide'}
 # southeast asia edition
 x = d_usa %>%
   filter(country %in% c("China","Viet Nam","Malaysia","Taipei, Chinese"),
@@ -816,19 +827,21 @@ plot = ggplot(x, aes(y = change, x = country, size = `2019-Q4`, fill = col)) +
   scale_y_continuous(limits = c(0,3), labels = scales::label_number(accuracy = 1, suffix = "x")) +
   scale_size_continuous(range = c(5,80)) +
   scale_fill_manual(values = c(dw_info %>% unname,dw_grey[7])) +
-  labs(title = "Electronics exports from Vietnam\nand Taiwan boom as China's decrease",
+  labs(title = "Electronics exports from Vietnam\nand Taiwan boom",
        caption = "change in US imports from Q4 2017 to Q4 2019.\nsize by volume in USD") +
   coord_flip() + guides(size = F, fill = guide_legend(override.aes = list(size = 15))) + theme_dw() +
   theme(legend.position="bottom", legend.text = element_text(size = 45),
         panel.grid.major.y = element_blank())
 
-finalise_dwplot(plot,"Source: ITC Trade Map | Methodology: github.com/dw-data/trade-dispute", "graphics/preliminary/xxx_trade-dispute_product_bubbles.svg", "svg",
+finalise_dwplot(plot,"Source: ITC Trade Map | Methodology: github.com/dw-data/trade-dispute", "graphics/preliminary/190_trade-dispute_product_bubbles.svg", "svg",
                 width_pixels=1920, height_pixels= 2700)
-finalise_dwplot(plot,"Source: ITC Trade Map | Methodology: github.com/dw-data/trade-dispute", "graphics/preliminary/xxx_trade-dispute_product_bubbles.png", "png",
+finalise_dwplot(plot,"Source: ITC Trade Map | Methodology: github.com/dw-data/trade-dispute", "graphics/preliminary/190_trade-dispute_product_bubbles.png", "png",
                 width_pixels=1920, height_pixels= 2700)
 ```
 
-```{r fig.width=3,fig.height=3}
+![](graphics/final/png/190_en_trade-dispute_product_bubbles.png)
+
+```{r fig.show='hide'}
 #mexico edition
 x = d_usa %>%
   filter(country %in% c("China","Mexico"),
@@ -859,9 +872,11 @@ plot = ggplot(x, aes(y = change, x = country, size = `2019-Q4`, fill = col)) +
   theme(legend.position="bottom", panel.grid.major.x = element_line(colour = dw_grey[7]),
         panel.grid.major.y = element_blank())
 
-finalise_dwplot(plot,"Source: ITC Trade Map | Methodology: github.com/dw-data/trade-dispute", "graphics/preliminary/xxx_trade-dispute_product_bubbles_mexico.svg", "svg",
+finalise_dwplot(plot,"Source: ITC Trade Map | Methodology: github.com/dw-data/trade-dispute", "graphics/preliminary/194_trade-dispute_product_bubbles_mexico.svg", "svg",
                 width_pixels=1920, height_pixels= 2400)
-finalise_dwplot(plot,"Source: ITC Trade Map | Methodology: github.com/dw-data/trade-dispute", "graphics/preliminary/xxx_trade-dispute_product_bubbles_mexico.png", "png",
+finalise_dwplot(plot,"Source: ITC Trade Map | Methodology: github.com/dw-data/trade-dispute", "graphics/preliminary/194_trade-dispute_product_bubbles_mexico.png", "png",
                 width_pixels=1920, height_pixels= 2400)
 ```
+
+![](graphics/final/png/194_en_trade-dispute_product_bubbles_mexico.png)
 
