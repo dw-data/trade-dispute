@@ -23,8 +23,8 @@ the pandemic started.
 *In this repository, you will find the methodology, data and code behind
 the story that came out of this analysis.*
 
-**Read the full article on DW.com:** [English](https://www.dw.com/a-xxx)
-| [German](https://www.dw.com/a-xxx)
+**Read the full article on DW.com:** [English](https://www.dw.com/a-55420269)
+| [German](https://www.dw.com/a-55432173)
 
 **Story by:** [Kira Schacht](https://twitter.com/daten_drang),
 [Christine Laskowski](https://twitter.com/laskowski_c)
