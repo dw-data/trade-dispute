@@ -21,13 +21,24 @@ Covid-19 pandemic). The analysis then looks at what has changed since
 the pandemic started.
 
 *In this repository, you will find the methodology, data and code behind
-the story that came out of this analysis.*
+the stories that came out of this analysis.*
 
-**Read the full article on DW.com:** [English](https://www.dw.com/a-55420269)
-| [German](https://www.dw.com/a-55432173)
+**Read the full stories:**
 
-**Story by:** [Kira Schacht](https://twitter.com/daten_drang),
-[Christine Laskowski](https://twitter.com/laskowski_c)
+  - The real winners of the US-China trade dispute:
+    [English](https://p.dw.com/p/3kXLJ) |
+    [German](https://p.dw.com/p/3kaRJ) |
+    [Spanish](https://p.dw.com/p/3kaRJ)
+  - How has the trade dispute between the United States and China
+    affected Mexico?: [Spanish](https://p.dw.com/p/3kWmN)
+  - Video explainer: The real winners (and losers) of the US-China trade
+    dispute: [English](https://www.youtube.com/watch?v=J_5u8guvAuI)
+
+**Data analysis by:** [Kira Schacht](https://twitter.com/daten_drang)
+
+**Reporting by:** [Kira Schacht](https://twitter.com/daten_drang),
+[Christine Laskowski](https://twitter.com/laskowski_c) and [Luis García
+Casas](https://twitter.com/ljgarciac)
 
 # Data sources
 
